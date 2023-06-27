@@ -16,7 +16,7 @@ function readRom(el: HTMLInputElement, callback: (value: any) => void) {
 
   reader.onload = async function () {
     try {
-      const bytes = await reader.result;
+      const bytes = await new Uint8Array(reader.result as ArrayBuffer);
       await callback(bytes);
     } catch (e) {
       const err = e as Error;
