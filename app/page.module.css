@@ -1,0 +1,13 @@
+.front {
+  position: relative;
+  top: 1em;
+  left: 1em;
+}
+
+.header {
+  padding: 1em;
+}
+
+.rom_button {
+  padding: 1em;
+}
