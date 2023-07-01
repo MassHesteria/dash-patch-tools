@@ -23,8 +23,8 @@ const printPatch = (vanilla: any, updated: any) => {
     diff.push(i);
   }
 
-  let result = [],
-    temp = [],
+  let result: number[][] = [],
+    temp: number[] = [],
     difference;
   for (let i = 0; i < diff.length; i += 1) {
     if (difference !== diff[i] - i) {
@@ -41,8 +41,25 @@ const printPatch = (vanilla: any, updated: any) => {
     result.push(temp);
   }
 
+  // Merge hunks that are less than 4 bytes apart
+  for (let i = 0; i < result.length - 1; i++) {
+    const last = result[i][result[i].length - 1];
+    const next = result[i + 1][0];
+    if (next - last < 4) {
+      console.debug(`merged ${next - last} bytes`);
+      for (let j = last + 1; j < next; j++) {
+        result[i].push(j);
+      }
+      result[i + 1].forEach((b) => result[i].push(b));
+      result[++i] = [];
+    }
+  }
+
   let output = "";
   result.forEach((h) => {
+    if (h.length <= 0) {
+      return;
+    }
     const offset = h[0];
     output += `dw $${toHex(offset, 4)},$${toHex(h.length, 4)}\n`;
 
@@ -91,9 +108,9 @@ export default function Home() {
     }
 
     if (vanilla.length > updated.length) {
-      console.log("vanilla length: ", vanilla.length);
-      console.log("updated length: ", updated.length);
-      throw new Error("length is different: not supported");
+      console.error("vanilla length: ", vanilla.length);
+      console.error("updated length: ", updated.length);
+      throw new Error("length is smaller: not supported");
     }
 
     return `; ${name}\n` + printPatch(vanilla, updated);

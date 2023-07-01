@@ -51,7 +51,6 @@ export function RomInput({
         variant={uploaded ? "destructive" : "default"}
         onClick={() => {
           if (input.current) {
-            console.log(input.current);
             input.current.click();
           }
         }}
