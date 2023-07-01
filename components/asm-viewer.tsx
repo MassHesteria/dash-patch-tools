@@ -3,8 +3,10 @@ import gruvbox from "react-syntax-highlighter/dist/esm/styles/prism/gruvbox-dark
 
 export function AsmViewer({ children }: { children: any }) {
   return (
-    <SyntaxHighlighter language="asm6502" style={gruvbox}>
-      {children}
-    </SyntaxHighlighter>
+    <div className="h-screen overflow-auto">
+      <SyntaxHighlighter language="asm6502" style={gruvbox}>
+        {children}
+      </SyntaxHighlighter>
+    </div>
   );
 }
