@@ -8,6 +8,7 @@ import { RomInput } from "@/components/rom-input";
 import { type Room } from "@/lib/rooms";
 import { superMetroidDecompress } from "@/lib/sm-decompress";
 import { toHex } from "@/lib/convert";
+import Navigation from "@/components/navigation";
 
 const vanillaChecksum =
   "12b77c4bc9c1832cee8881244659065ee1d84c70c3d29e6eaf92e6798cc2ca72";
@@ -130,27 +131,34 @@ export default function Home() {
   return (
     <main className="flex justify-center">
       <div id="left_side" className="w-1/3 h-screen pl-2">
-        <div className="p-1">DASH Room Patcher</div>
-        <RomInput name="vanillaRom" onLoad={setVanillaBytes}>
-          Upload Vanilla Rom
-        </RomInput>
-        <RomInput name="modifiedRom" onLoad={setModifiedBytes}>
-          Upload Modified Rom
-        </RomInput>
-        {vanillaBytes != null && modifiedBytes != null ? (
-          <div className="p-1">
-            <Button
-              onClick={() => {
-                setModifiedRooms(getModifiedRooms(vanillaBytes, modifiedBytes));
-              }}
-            >
-              Process Files
-            </Button>
-            <ModifiedRooms />
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="h-5/6">
+          <div className="p-1">DASH Room Patcher</div>
+          <RomInput name="vanillaRom" onLoad={setVanillaBytes}>
+            Upload Vanilla Rom
+          </RomInput>
+          <RomInput name="modifiedRom" onLoad={setModifiedBytes}>
+            Upload Modified Rom
+          </RomInput>
+          {vanillaBytes != null && modifiedBytes != null ? (
+            <div className="p-1">
+              <Button
+                onClick={() => {
+                  setModifiedRooms(
+                    getModifiedRooms(vanillaBytes, modifiedBytes)
+                  );
+                }}
+              >
+                Process Files
+              </Button>
+              <ModifiedRooms />
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="h-1/6 relative">
+          <Navigation />
+        </div>
       </div>
       <div id="right_side" className="w-2/3 h-screen">
         <AsmViewer>{patchCode}</AsmViewer>

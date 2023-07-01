@@ -6,6 +6,7 @@ import { useState } from "react";
 import { RomInput } from "@/components/rom-input";
 import { IpsPatch, IpsHunk } from "@/lib/ips-patch";
 import { PC_to_LoROM, toHex } from "@/lib/convert";
+import Navigation from "@/components/navigation";
 
 export default function Scanner() {
   const [patchBytes, setPatchBytes] = useState(null);
@@ -52,17 +53,22 @@ export default function Scanner() {
   return (
     <main className="flex justify-center">
       <div id="left_side" className="w-1/3 h-screen pl-2">
-        <div className="p-1">DASH Patch Scanner</div>
-        <RomInput name="ipsPatch" onLoad={setPatchBytes}>
-          Upload IPS Patch
-        </RomInput>
-        {patchBytes != null ? (
-          <div className="p-1">
-            <Button onClick={() => generateCode()}>Generate ASM</Button>
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="h-5/6">
+          <div className="p-1">DASH Patch Scanner</div>
+          <RomInput name="ipsPatch" onLoad={setPatchBytes}>
+            Upload IPS Patch
+          </RomInput>
+          {patchBytes != null ? (
+            <div className="p-1">
+              <Button onClick={() => generateCode()}>Generate ASM</Button>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="h-1/6 relative">
+          <Navigation />
+        </div>
       </div>
       <div id="right_side" className="w-2/3 h-screen">
         <AsmViewer>{patchCode}</AsmViewer>
