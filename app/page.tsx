@@ -1,7 +1,6 @@
 "use client";
 
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import gruvbox from "react-syntax-highlighter/dist/esm/styles/prism/gruvbox-dark";
+import { AsmViewer } from "@/components/asm-viewer";
 import { Button } from "@/components/ui/button";
 import { getModifiedRooms } from "@/lib/utils";
 import { useState } from "react";
@@ -130,7 +129,7 @@ export default function Home() {
 
   return (
     <main className="flex justify-center">
-      <div id="left_side" className="w-1/2 h-screen pl-2">
+      <div id="left_side" className="w-1/3 h-screen pl-2">
         <div className="p-1">DASH Room Patcher</div>
         <RomInput name="vanillaRom" onLoad={setVanillaBytes}>
           Upload Vanilla Rom
@@ -153,10 +152,8 @@ export default function Home() {
           ""
         )}
       </div>
-      <div id="right_side" className="w-1/2 h-screen">
-        <SyntaxHighlighter language="asm6502" style={gruvbox}>
-          {patchCode}
-        </SyntaxHighlighter>
+      <div id="right_side" className="w-2/3 h-screen">
+        <AsmViewer>{patchCode}</AsmViewer>
       </div>
     </main>
   );
