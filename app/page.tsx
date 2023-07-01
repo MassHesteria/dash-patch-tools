@@ -5,18 +5,15 @@ import gruvbox from "react-syntax-highlighter/dist/esm/styles/prism/gruvbox-dark
 import { Button } from "@/components/ui/button";
 import { getModifiedRooms } from "@/lib/utils";
 import { useState } from "react";
-import styles from "./page.module.css";
 import { RomInput } from "@/components/rom-input";
 import { type Room } from "@/lib/rooms";
 import { superMetroidDecompress } from "@/lib/sm-decompress";
+import { toHex } from "@/lib/convert";
 
 const vanillaChecksum =
   "12b77c4bc9c1832cee8881244659065ee1d84c70c3d29e6eaf92e6798cc2ca72";
 
-const toHex = (num, digits) =>
-  num.toString(16).padStart(digits, "0").toUpperCase();
-
-const printPatch = (vanilla, updated) => {
+const printPatch = (vanilla: any, updated: any) => {
   const diff = [];
 
   for (let i = 0; i < updated.length; i++) {
@@ -82,7 +79,7 @@ export default function Home() {
     // Utility routines.
     const snes2hex = (address: number) =>
       ((address >> 1) & 0x3f8000) | (address & 0x7fff);
-    const extract = (rom) =>
+    const extract = (rom: any) =>
       Buffer.from(superMetroidDecompress(rom, snes2hex(address), 0));
 
     // Decompress the data from the ROM files.

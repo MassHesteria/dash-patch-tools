@@ -6,3 +6,6 @@ export const PC_to_LoROM = (pc: number) => {
 export const LoROM_to_PC = (lorom: number) => {
   return ((lorom >> 1) & 0x3f8000) | (lorom & 0x7fff);
 };
+
+export const toHex = (num: number, digits: number) =>
+  num.toString(16).padStart(digits, "0").toUpperCase();
